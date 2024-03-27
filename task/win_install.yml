@@ -1,0 +1,44 @@
+---
+- name: checking for agent install
+  win_service:
+    name: parity
+  register: agent
+
+- debug:
+    msg: "bit9 agent not found (installing)"
+  when: not agent.exists
+
+- debug:
+    msg: "bit9 agent found (skipping install)"
+  when: agent.exists
+
+- name: create {{ windows_agent_log }} directory
+  win_file:
+    path: '{{ windows_agent_log }}'
+    recurse: yes
+    state: directory
+  when: not agent.exists
+
+- name: Create Staging Folder
+  win_file:
+    path: C:\build-artifacts
+    state: directory
+
+- name: Copy installer files to remote server
+  win_copy:
+    src: "{{ role_path }}/files/{{ bit9[package_folder] }}"
+    dest: "C:\\build-artifacts\\{{ bit9[package_folder] }}"
+
+- name: install bit9 agent (windows)
+  win_package:
+    path: "C:\\build-artifacts\\{{ bit9[package_folder] }}"
+    log_path: '{{ windows_agent_log }}\bit9_log.txt'
+    state: present
+    arguments: /qn
+  when: not agent.exists
+
+- name: verify bit9 started
+  win_service:
+    name: parity
+    state: started
+    start_mode: auto

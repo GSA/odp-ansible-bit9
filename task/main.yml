@@ -1,0 +1,32 @@
+---
+- name: Windows Server and Workstation
+  set_fact:
+    package_folder: win
+  when: ansible_facts['os_family']|lower == 'windows' 
+
+- name: Check if installer exists
+  stat:
+    path: "{{ role_path }}/files/{{ bit9[package_folder] }}"
+  register: installer_file
+  delegate_to: localhost
+  become: false 
+
+- name: Download Binaries from S3 
+  aws_s3:
+    bucket: sectools-installation-artifacts
+    object: "{{ package_folder }}/{{ item }}"
+    dest: "{{ role_path }}/files/{{ item }}"
+    mode: get
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+    aws_security_token: "{{ session_token }}"
+  when: not stat_result.stat.exists
+  with_items:
+  - "{{ bit9[package_folder] }}"
+  delegate_to: localhost
+  become: false
+
+- name: Windows Server and Workstation
+  include_tasks: win_install.yml
+  when: ansible_os_family|lower == 'windows'  
+

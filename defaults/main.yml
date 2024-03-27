@@ -1,0 +1,9 @@
+---
+# defaults file for ansible-bit9
+windows_bit9_agent_path: "C:\\Program Files (x86)\\Bit9\\Parity Agent" # default windows install directory
+windows_bit9_agent_url: "" # default windows agent artifactory url
+windows_bit9_product_id: "" # win_package using a url requires a product_id
+windows_agent_log: "C:\\Temp\\Logs" # default agent log directory windows
+
+bit9_installer_file:
+  win: "bit9"

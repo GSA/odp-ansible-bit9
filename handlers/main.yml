@@ -1,0 +1,7 @@
+---
+# handlers file for ansible-bit9
+- name: restart bigfix service
+  win_service:
+    name: BESClient
+    state: restarted
+  when: ansible_os_family = 'Windows'
