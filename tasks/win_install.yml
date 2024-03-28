@@ -26,12 +26,12 @@
 
 - name: Copy installer files to remote server
   win_copy:
-    src: "{{ role_path }}/files/{{ bit9[package_folder] }}"
-    dest: "C:\\build-artifacts\\{{ bit9[package_folder] }}"
+    src: "{{ role_path }}/files/{{ bit9_installer_file[package_folder] }}"
+    dest: "C:\\build-artifacts\\{{ bit9_installer_file[package_folder] }}"
 
 - name: install bit9 agent (windows)
   win_package:
-    path: "C:\\build-artifacts\\{{ bit9[package_folder] }}"
+    path: "C:\\build-artifacts\\{{ bit9_installer_file[package_folder] }}"
     log_path: '{{ windows_agent_log }}\bit9_log.txt'
     state: present
     arguments: /qn
