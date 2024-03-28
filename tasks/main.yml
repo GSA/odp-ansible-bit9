@@ -20,10 +20,10 @@
     aws_access_key: "{{ access_key }}"
     aws_secret_key: "{{ secret_key }}"
     aws_security_token: "{{ session_token }}"
-  when: not stat_result.stat.exists
+  delegate_to: localhost
+  when: not installer_file.stat.exists
   with_items:
   - "{{ bit9_installer_file[package_folder] }}"
-  delegate_to: localhost
   become: false
 
 - name: Windows Server and Workstation
