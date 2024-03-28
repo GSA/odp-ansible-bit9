@@ -6,7 +6,7 @@
 
 - name: Check if installer exists
   stat:
-    path: "{{ role_path }}/files/{{ bit9[package_folder] }}"
+    path: "{{ role_path }}/files/{{ bit9_installer_file[package_folder] }}"
   register: installer_file
   delegate_to: localhost
   become: false 
@@ -22,7 +22,7 @@
     aws_security_token: "{{ session_token }}"
   when: not stat_result.stat.exists
   with_items:
-  - "{{ bit9[package_folder] }}"
+  - "{{ bit9_installer_file[package_folder] }}"
   delegate_to: localhost
   become: false
 
