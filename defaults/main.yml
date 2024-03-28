@@ -7,3 +7,10 @@ windows_agent_log: "C:\\Temp\\Logs" # default agent log directory windows
 
 bit9_installer_file:
   win: "bit9.msi"
+
+#Set this to true when this role is used to build AMI  
+ami_build_flag: False
+secret_text:
+access_key:
+secret_key:
+session_token:
