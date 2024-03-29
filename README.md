@@ -1,4 +1,4 @@
-bit9 [![circleci](https://circleci.com/gh/GSA/ansible-bit9.svg?style=svg)](https://circleci.com/gh/GSA/ansible-bit9)
+odp-ansible-bit9
 =========
 
 This ansible role installs and configures the bit9 agent required to communicate with client machines.
